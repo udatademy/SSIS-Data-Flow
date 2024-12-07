@@ -1,0 +1,1283 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/19/2023 10:11:33 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-AGROAGK"
+  DTS:CreatorName="DESKTOP-AGROAGK\Cristian"
+  DTS:DTSID="{AA95A260-9E3A-4281-8844-D903F05AA449}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5314.0"
+  DTS:LocaleID="10250"
+  DTS:ObjectName="Derive Column and Row Count"
+  DTS:PackageType="5"
+  DTS:VersionBuild="7"
+  DTS:VersionGUID="{72827889-BC8C-459D-9A29-F40D655F8550}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Administrador de conexiones con Excel]"
+      DTS:CreationName="EXCEL"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{8D771877-DD28-444C-A740-499E5562E191}"
+      DTS:ObjectName="Administrador de conexiones con Excel">
+      <DTS:PropertyExpression
+        DTS:Name="ExcelFilePath">@[User::Ruta]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\SQL Server Integration Services\Columna Derivada\Ventas Video Juegos CH13.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.STREAMING]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D989E481-E35B-40AB-843F-D115BE8A2010}"
+      DTS:ObjectName="LocalHost.STREAMING">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=STREAMING;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Derive Column and Row Count-{D989E481-E35B-40AB-843F-D115BE8A2010}LocalHost.STREAMING;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{ADE57420-3B64-4220-84C2-C54081F38517}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Cantidad">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A622F9D3-E20C-48D6-959B-865535DDC684}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="SUBSTRING( @[User::Ruta], 73, 4 )"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Cod_Archivo">
+      <DTS:VariableValue
+        DTS:DataType="8">CH13</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5B1B6B6D-73D6-4831-9590-A94476C056C3}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Ruta">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\SQL Server Integration Services\Columna Derivada\Ventas Video Juegos CH13.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Carga Bucle Video Juegos"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Contenedor de bucles Foreach"
+      DTS:DTSID="{7CC9BBC8-8596-44C2-891A-B7C5E6EC2582}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Carga Bucle Video Juegos">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{F9C9A9F4-BE9E-4329-95D0-66A91E944D61}"
+        DTS:ObjectName="{F9C9A9F4-BE9E-4329-95D0-66A91E944D61}">
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="C:\SQL Server Integration Services\Columna Derivada" />
+            <FEFEProperty
+              FileSpec="*.xlsx" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Carga Bucle Video Juegos\Actualizar Cantidad"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Tarea Ejecutar SQL"
+          DTS:DTSID="{85821BCB-5119-4046-9C57-B03B64BCAD84}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Actualizar Cantidad"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{D989E481-E35B-40AB-843F-D115BE8A2010}"
+              SQLTask:SqlStatementSource="UPDATE VideoJuegos&#xA;SET Cantidad_Registro = ?&#xA;WHERE Cod_Archivo = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::Cantidad"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::Cod_Archivo"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{199CFE1E-BAFF-481E-9A95-C426EF39A8D4}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Carga VideoJuegos"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego"
+                  componentClassID="Microsoft.ExcelSource"
+                  contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Excel Source"
+                  name="Carga VideoJuego"
+                  usesDispositions="true"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">'Ventas Video Juegos$'</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mapping from parameters in the SQL command to variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Administrador de conexiones con Excel]"
+                      connectionManagerRefId="Package.ConnectionManagers[Administrador de conexiones con Excel]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output]"
+                      name="Excel Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Nombres]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].ExternalColumns[Nombres]"
+                          length="255"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Nombres]"
+                          name="Nombres"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Anio]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].ExternalColumns[Anio]"
+                          length="255"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Anio]"
+                          name="Anio"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Edad]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].ExternalColumns[Edad]"
+                          length="255"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Edad]"
+                          name="Edad"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Plataforma]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].ExternalColumns[Plataforma]"
+                          length="255"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Plataforma]"
+                          name="Plataforma"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Juego]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].ExternalColumns[Juego]"
+                          length="255"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Juego]"
+                          name="Juego"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Pais]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].ExternalColumns[Pais]"
+                          length="255"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Pais]"
+                          name="Pais"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].ExternalColumns[Nombres]"
+                          dataType="wstr"
+                          length="255"
+                          name="Nombres" />
+                        <externalMetadataColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].ExternalColumns[Anio]"
+                          dataType="wstr"
+                          length="255"
+                          name="Anio" />
+                        <externalMetadataColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].ExternalColumns[Edad]"
+                          dataType="wstr"
+                          length="255"
+                          name="Edad" />
+                        <externalMetadataColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].ExternalColumns[Plataforma]"
+                          dataType="wstr"
+                          length="255"
+                          name="Plataforma" />
+                        <externalMetadataColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].ExternalColumns[Juego]"
+                          dataType="wstr"
+                          length="255"
+                          name="Juego" />
+                        <externalMetadataColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].ExternalColumns[Pais]"
+                          dataType="wstr"
+                          length="255"
+                          name="Pais" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output]"
+                      isErrorOut="true"
+                      name="Excel Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[Nombres]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[Nombres]"
+                          name="Nombres" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[Anio]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[Anio]"
+                          name="Anio" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[Edad]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[Edad]"
+                          name="Edad" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[Plataforma]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[Plataforma]"
+                          name="Plataforma" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[Juego]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[Juego]"
+                          name="Juego" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[Pais]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[Pais]"
+                          name="Pais" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion"
+                  componentClassID="Microsoft.DataConvert"
+                  contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Data Conversion"
+                  name="Data Conversion"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Inputs[Data Conversion Input]"
+                      name="Data Conversion Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Inputs[Data Conversion Input].Columns[Nombres]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Nombres"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Nombres]" />
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Inputs[Data Conversion Input].Columns[Anio]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Anio"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Anio]" />
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Inputs[Data Conversion Input].Columns[Edad]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Edad"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Edad]" />
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Inputs[Data Conversion Input].Columns[Plataforma]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Plataforma"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Plataforma]" />
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Inputs[Data Conversion Input].Columns[Juego]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Juego"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Juego]" />
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Inputs[Data Conversion Input].Columns[Pais]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Pais"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Pais]" />
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Inputs[Data Conversion Input].Columns[Cod_Archivo]"
+                          cachedDataType="wstr"
+                          cachedLength="4"
+                          cachedName="Cod_Archivo"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Outputs[Derived Column Output].Columns[Cod_Archivo]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output]"
+                      exclusionGroup="1"
+                      name="Data Conversion Output"
+                      synchronousInputId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Nombres]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="100"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Nombres]"
+                          name="Copy of Nombres"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Nombres]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Anio]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="4"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Anio]"
+                          name="Copy of Anio"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Anio]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Edad]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="2"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Edad]"
+                          name="Copy of Edad"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Edad]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Plataforma]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="50"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Plataforma]"
+                          name="Copy of Plataforma"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Plataforma]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Juego]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Juego]"
+                          name="Copy of Juego"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Juego]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Pais]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="50"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Pais]"
+                          name="Copy of Pais"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Pais]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Cod_Archivo]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="4"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Cod_Archivo]"
+                          name="Copy of Cod_Archivo"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Outputs[Derived Column Output].Columns[Cod_Archivo]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Data Conversion Error Output"
+                      synchronousInputId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="Derived Column"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Inputs[Derived Column Input].Columns[Pais]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Pais"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Pais]"
+                          truncationRowDisposition="FailComponent"
+                          usageType="readWrite">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">#{Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Pais]} == "Spain" ? "España" : #{Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output].Columns[Pais]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">Pais == "Spain" ? "España" : Pais</property>
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Outputs[Derived Column Output].Columns[Cod_Archivo]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="4"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Outputs[Derived Column Output].Columns[Cod_Archivo]"
+                          name="Cod_Archivo"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">@[User::Cod_Archivo]</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">@[User::Cod_Archivo]</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Outputs[Derived Column Output].Columns[Cantidad]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Outputs[Derived Column Output].Columns[Cantidad]"
+                          name="Cantidad"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">@[User::Cantidad]</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">@[User::Cantidad]</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Destino Video Juegos"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[VideoJuegos]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[LocalHost.STREAMING]"
+                      connectionManagerRefId="Package.ConnectionManagers[LocalHost.STREAMING]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].Columns[Copy of Nombres]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="100"
+                          cachedName="Copy of Nombres"
+                          externalMetadataColumnId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Nombres]"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Nombres]" />
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].Columns[Copy of Edad]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="2"
+                          cachedName="Copy of Edad"
+                          externalMetadataColumnId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Edad]"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Edad]" />
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].Columns[Copy of Anio]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="4"
+                          cachedName="Copy of Anio"
+                          externalMetadataColumnId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Año]"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Anio]" />
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].Columns[Copy of Plataforma]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedName="Copy of Plataforma"
+                          externalMetadataColumnId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Plataforma]"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Plataforma]" />
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].Columns[Copy of Juego]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="255"
+                          cachedName="Copy of Juego"
+                          externalMetadataColumnId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Juego]"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Juego]" />
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].Columns[Copy of Pais]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedName="Copy of Pais"
+                          externalMetadataColumnId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Pais]"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Pais]" />
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].Columns[Copy of Cod_Archivo]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="4"
+                          cachedName="Copy of Cod_Archivo"
+                          externalMetadataColumnId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Cod_Archivo]"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Cod_Archivo]" />
+                        <inputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].Columns[Cantidad]"
+                          cachedDataType="i4"
+                          cachedName="Cantidad"
+                          externalMetadataColumnId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Cantidad_Registro]"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Outputs[Derived Column Output].Columns[Cantidad]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Cod_Archivo]"
+                          codePage="1252"
+                          dataType="str"
+                          length="20"
+                          name="Cod_Archivo" />
+                        <externalMetadataColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Nombres]"
+                          codePage="1252"
+                          dataType="str"
+                          length="100"
+                          name="Nombres" />
+                        <externalMetadataColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Año]"
+                          codePage="1252"
+                          dataType="str"
+                          length="4"
+                          name="Año" />
+                        <externalMetadataColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Edad]"
+                          codePage="1252"
+                          dataType="str"
+                          length="2"
+                          name="Edad" />
+                        <externalMetadataColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Plataforma]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Plataforma" />
+                        <externalMetadataColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Juego]"
+                          codePage="1252"
+                          dataType="text"
+                          name="Juego" />
+                        <externalMetadataColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Pais]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Pais" />
+                        <externalMetadataColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input].ExternalColumns[Cantidad_Registro]"
+                          dataType="i4"
+                          name="Cantidad_Registro" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Row Count"
+                  componentClassID="Microsoft.RowCount"
+                  contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+                  name="Row Count">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable to hold the row count."
+                      name="VariableName">User::Cantidad</property>
+                  </properties>
+                  <inputs>
+                    <input
+                      refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Row Count.Inputs[Row Count Input 1]"
+                      hasSideEffects="true"
+                      name="Row Count Input 1">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Row Count.Outputs[Row Count Output 1]"
+                      name="Row Count Output 1"
+                      synchronousInputId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Row Count.Inputs[Row Count Input 1]">
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos.Paths[Data Conversion Output]"
+                  endId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos.Inputs[OLE DB Destination Input]"
+                  name="Data Conversion Output"
+                  startId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Outputs[Data Conversion Output]" />
+                <path
+                  refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos.Paths[Derived Column Output]"
+                  endId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Derived Column Output"
+                  startId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos.Paths[Excel Source Output]"
+                  endId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Row Count.Inputs[Row Count Input 1]"
+                  name="Excel Source Output"
+                  startId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego.Outputs[Excel Source Output]" />
+                <path
+                  refId="Package\Carga Bucle Video Juegos\Carga VideoJuegos.Paths[Row Count Output 1]"
+                  endId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column.Inputs[Derived Column Input]"
+                  name="Row Count Output 1"
+                  startId="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Row Count.Outputs[Row Count Output 1]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Carga Bucle Video Juegos.PrecedenceConstraints[Restricción 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{C81CC2E6-D893-4D3A-8A75-AAEE70D43F54}"
+          DTS:From="Package\Carga Bucle Video Juegos\Carga VideoJuegos"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Restricción 1"
+          DTS:To="Package\Carga Bucle Video Juegos\Actualizar Cantidad" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{F2473005-7655-4492-B639-ACFDBD9BC8C7}"
+          DTS:ObjectName="{F2473005-7655-4492-B639-ACFDBD9BC8C7}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::Ruta" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Limpiar Tabla Video Juegos"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{BBF3925D-C670-44DF-88F9-1C46FAF52A81}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Limpiar Tabla Video Juegos"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D989E481-E35B-40AB-843F-D115BE8A2010}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE VideoJuegos" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción]"
+      DTS:CreationName=""
+      DTS:DTSID="{2BBA0EE1-470C-47C4-A6D7-E39454B822AD}"
+      DTS:From="Package\Limpiar Tabla Video Juegos"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción"
+      DTS:To="Package\Carga Bucle Video Juegos" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--Esta sección CDATA contiene la información de diseño del paquete. Esta sección incluye información como, por ejemplo, las coordenadas (x,y), el ancho y el alto.-->
+<!--Si edita manualmente esta sección y comete un error, puede eliminarlo. -->
+<!--El paquete podrá cargarse normalmente, pero se perderá la información de diseño anterior y el diseñador reorganizará los elementos automáticamente en la superficie de diseño.-->
+<Objects
+  Version="8">
+  <!--Cada uno de los nodos siguientes contiene propiedades que no afectan al comportamiento en tiempo de ejecución.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="215,42"
+          Id="Package\Limpiar Tabla Video Juegos"
+          TopLeft="335,47" />
+        <NodeLayout
+          Size="174,42"
+          Id="Package\Carga Bucle Video Juegos\Actualizar Cantidad"
+          TopLeft="56,110" />
+        <EdgeLayout
+          Id="Package\Carga Bucle Video Juegos.PrecedenceConstraints[Restricción 1]"
+          TopLeft="142,66">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="176,42"
+          Id="Package\Carga Bucle Video Juegos\Carga VideoJuegos"
+          TopLeft="53,24" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="276,207"
+          Size="276,250"
+          Id="Package\Carga Bucle Video Juegos"
+          TopLeft="312,133" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción]"
+          TopLeft="446.25,89">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Carga Bucle Video Juegos\Carga VideoJuegos">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego"
+          TopLeft="277,75" />
+        <NodeLayout
+          Size="161,42"
+          Id="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Data Conversion"
+          TopLeft="279,228" />
+        <NodeLayout
+          Size="186,42"
+          Id="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos"
+          TopLeft="268,317" />
+        <EdgeLayout
+          Id="Package\Carga Bucle Video Juegos\Carga VideoJuegos.Paths[Data Conversion Output]"
+          TopLeft="360.25,270">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47"
+              Start="0,0"
+              End="0,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Derived Column"
+          TopLeft="280,154" />
+        <NodeLayout
+          Size="133,42"
+          Id="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Row Count"
+          TopLeft="492,101" />
+        <EdgeLayout
+          Id="Package\Carga Bucle Video Juegos\Carga VideoJuegos.Paths[Excel Source Output]"
+          TopLeft="447,96">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="45,20.3333333333333"
+              Start="0,0"
+              End="37.5,20.3333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="22.0091743119266,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="22.0091743119266,0"
+                    Point2="26.0091743119266,0"
+                    Point3="26.0091743119266,4" />
+                  <mssgle:LineSegment
+                    End="26.0091743119266,16.3333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="26.0091743119266,16.3333333333333"
+                    Point2="26.0091743119266,20.3333333333333"
+                    Point3="30.0091743119266,20.3333333333333" />
+                  <mssgle:LineSegment
+                    End="37.5,20.3333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Carga Bucle Video Juegos\Carga VideoJuegos.Paths[Row Count Output 1]"
+          TopLeft="492,127.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-54,47.3333333333333"
+              Start="0,0"
+              End="-46.5,47.3333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-18.7889908256881,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-18.7889908256881,0"
+                    Point2="-22.7889908256881,0"
+                    Point3="-22.7889908256881,4" />
+                  <mssgle:LineSegment
+                    End="-22.7889908256881,43.3333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-22.7889908256881,43.3333333333333"
+                    Point2="-22.7889908256881,47.3333333333333"
+                    Point3="-26.7889908256881,47.3333333333333" />
+                  <mssgle:LineSegment
+                    End="-46.5,47.3333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Carga Bucle Video Juegos\Carga VideoJuegos.Paths[Derived Column Output]"
+          TopLeft="359.25,196">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32"
+              Start="0,0"
+              End="0,24.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Carga VideoJuego">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga Bucle Video Juegos\Carga VideoJuegos\Destino Video Juegos">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
